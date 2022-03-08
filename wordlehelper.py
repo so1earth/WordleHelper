@@ -1,19 +1,34 @@
 import re
-def main():
-    # Word辞書ファイルを読み込んでsetに格納
-    init_set = set()
-    with open('5wordsList', 'r', encoding='utf-8') as f:
-        for row in f:
-            init_set.add(row.strip()) 
-    # ユーザインタフェース起動。
+
+# 初期化
+used_char = ""
+green_reg = ""
+yellow_reg = ""
+gray_reg = ""
+
+def reg_generate():
+    # 初期化
+    global used_char
+    global green_reg
+    global yellow_reg
+    global gray_reg
+    green_string_for_reg = ""
+
     # Green処理
     green_string = input("Green: ")
-    green_reg = "(?=" + green_string.replace("?", ".") + ")"
+    for char in green_string:
+        if char == "?":
+            green_string_for_reg += "."
+        else:
+            green_string_for_reg += char
+            used_char += char
+    green_reg += "(?=" + green_string_for_reg + ")"
     # Yellow処理
-    yellow_string = input("Yellow:")
-    yellow_reg = ""
+    yellow_string = input("Yellow: ")
+
     for index, char in enumerate(yellow_string, start=1):
         if char != "?":
+            used_char += char
             #含まれている文字パターン
             yellow_reg += "(?=.*" + char + ")"
             #除外位置パターン
@@ -24,9 +39,28 @@ def main():
                 else:
                     exclude_loc += "."
             yellow_reg += "(?!" + exclude_loc + ")"
+    # Gray処理
+    gray_string = input("Gray: ")
+    exclude_chars = gray_string.split(",")
+    for char in exclude_chars:
+        if char not in used_char:
+            gray_reg += "(?!.*" + char + ")"
+    # regular expression return
+    return green_reg + yellow_reg + gray_reg
+
+
+def main():
+
+    # Word辞書ファイルを読み込んでsetに格納
+    init_set = set()
+    with open('5wordsList', 'r', encoding='utf-8') as f:
+        for row in f:
+            init_set.add(row.strip()) 
+
+    all_reg = reg_generate()
 
     # フィルタリング処理
-    reg = "^" + green_reg + yellow_reg + "[a-z]{5}$"
+    reg = "^" + all_reg + "[a-z]{5}$"
     print("Regular Expression Pattern:", reg)
     word_set = set()
     for word in init_set:
