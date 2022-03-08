@@ -1,17 +1,7 @@
 import re
 
-# 初期化
-used_char = ""
-green_reg = ""
-yellow_reg = ""
-gray_reg = ""
-
-def reg_generate():
+def reg_generate(green_reg, yellow_reg, gray_reg, used_char):
     # 初期化
-    global used_char
-    global green_reg
-    global yellow_reg
-    global gray_reg
     green_string_for_reg = ""
 
     # Green処理
@@ -46,10 +36,15 @@ def reg_generate():
         if char not in used_char:
             gray_reg += "(?!.*" + char + ")"
     # regular expression return
-    return green_reg + yellow_reg + gray_reg
+    return green_reg, yellow_reg, gray_reg, used_char
 
 
 def main():
+    # 初期化
+    used_char = ""
+    green_reg = ""
+    yellow_reg = ""
+    gray_reg = ""
 
     # Word辞書ファイルを読み込んでsetに格納
     init_set = set()
@@ -57,10 +52,10 @@ def main():
         for row in f:
             init_set.add(row.strip()) 
 
-    all_reg = reg_generate()
+    green_reg, yellow_reg, gray_reg, used_char = reg_generate(green_reg, yellow_reg, gray_reg, used_char)
 
     # フィルタリング処理
-    reg = "^" + all_reg + "[a-z]{5}$"
+    reg = "^" + green_reg + yellow_reg + gray_reg + "[a-z]{5}$"
     print("Regular Expression Pattern:", reg)
     word_set = set()
     for word in init_set:
