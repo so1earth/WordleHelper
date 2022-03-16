@@ -1,4 +1,5 @@
 import re
+import os
 
 def reg_generate(green_reg, yellow_reg, gray_reg, used_char):
     # 初期化
@@ -6,7 +7,6 @@ def reg_generate(green_reg, yellow_reg, gray_reg, used_char):
 
     # Green処理
     green_string = input("Green: ")
-    print(len(green_string))
     if len(green_string) == 5:
         for char in green_string:
             if char == "?":
@@ -51,7 +51,8 @@ def main():
 
     # Word辞書ファイルを読み込んでsetに格納
     init_set = set()
-    with open('5wordsList', 'r', encoding='utf-8') as f:
+    five_word_file = os.path.join(os.path.dirname(__file__), '5wordsList')
+    with open( five_word_file, 'r', encoding='utf-8') as f:
         for row in f:
             init_set.add(row.strip()) 
             
@@ -68,7 +69,7 @@ def main():
                 word_set.add(word)
 
         # ステータス出力
-        print("Words Number: ", len(word_set))
+        print("Match Number: ", len(word_set))
         # 単語のリストを出力
         count = 0
         for word in word_set:
@@ -77,7 +78,7 @@ def main():
             if count == 30:
                 break
         # プロンプト
-        ctrl_string = input("Another Try? (y or n) : ")
+        ctrl_string = input("Another try to narrow down? (y or n) : ")
         if ctrl_string != "y":
             flag = False
             break
