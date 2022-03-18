@@ -1,5 +1,6 @@
 import re
 import os
+DISPLAY_WORD_CNT = 200
 
 def reg_generate(green_reg, yellow_reg, gray_reg, used_char):
     # 初期化
@@ -69,15 +70,19 @@ def main():
                 word_set.add(word)
 
         # ステータス出力
-        print("Match Number: ", len(word_set))
-        # 単語のリストを出力
+        print("Match Number: ", len(word_set), end = "")
+        print(f" (Showing {DISPLAY_WORD_CNT})") if len(word_set) > DISPLAY_WORD_CNT else print("")
+        # 単語のリストを出力　
         count = 0
         for word in word_set:
-            print(word)
+            print(word, end = "  ")
             count += 1
-            if count == 30:
-                break
+            if count % 10 == 0:
+                print()
+                if count >= DISPLAY_WORD_CNT:
+                    break
         # プロンプト
+        print("\n")
         ctrl_string = input("Another try to narrow down? (y or n) : ")
         if ctrl_string != "y":
             flag = False
