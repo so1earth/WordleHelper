@@ -62,7 +62,7 @@ def main():
         green_reg, yellow_reg, gray_reg, used_char = reg_generate(green_reg, yellow_reg, gray_reg, used_char)
 
         # フィルタリング処理
-        reg = "^" + green_reg + yellow_reg + gray_reg + "[a-zA-Z]{5}$"
+        reg = "(?i)" + "^" + green_reg + yellow_reg + gray_reg + "[a-zA-Z]{5}$"
         print("Regular Expression Pattern:", reg)
         word_set = set()
         for word in init_set:
