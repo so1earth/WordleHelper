@@ -72,9 +72,23 @@ def main():
         # ステータス出力
         print("Match Number: ", len(word_set), end = "")
         print(f" (Showing {DISPLAY_WORD_CNT})") if len(word_set) > DISPLAY_WORD_CNT else print("")
+
+        # 大文字と小文字を分ける。
+        upper_words = []
+        lower_words = []
+        for word in word_set:
+            if word.islower():
+                lower_words.append(word)
+            else:
+                upper_words.append(word)
+
+        # TODO 小文字のリストをRating順にソート
+
+        word_list = lower_words + upper_words
+
         # 単語のリストを出力　
         count = 0
-        for word in word_set:
+        for word in word_list:
             print(word, end = "  ")
             count += 1
             if count % 10 == 0:
