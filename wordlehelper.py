@@ -82,7 +82,7 @@ def main():
             else:
                 upper_words.append(word)
 
-        # TODO 小文字のリストをRating順にソート
+        # 小文字のリストをRating順にソート
         lower_words_dic = dict.fromkeys(lower_words, 0)
         vow_sounds = "aiueo"
         for word in lower_words_dic:
@@ -94,7 +94,6 @@ def main():
                 if word.count(letter) > 1:
                     lower_words_dic[word] -= 1
         lower_words_tup = sorted(lower_words_dic.items(), key=lambda x:x[1], reverse=True)
-        print(lower_words_tup[:9])
         lower_words = [l for l, r in lower_words_tup]
 
 
