@@ -70,6 +70,27 @@ def main():
                 word_set.add(word)
 
         # ステータス出力
+        # TODO 文字のステータス表示を表示
+        # Green Status表示
+        green_reg_list = green_reg.split(')')
+        alpha_dic = {}
+        for pattern in green_reg_list:
+            if pattern == '':
+                continue
+            else:
+                count = 0
+                for i, letter in enumerate(pattern):
+                    if letter.isalpha():
+                        alpha_dic[letter] = i - 2
+        for num in range(1, 6):
+            enter_flag = False
+            for letter, loc in alpha_dic.items():
+                if num == loc:
+                    print(letter, end=" ")
+                    enter_flag = True
+            if enter_flag == False:
+                print("?", end=" ")
+        print()
         print("Match Number: ", len(word_set), end = "")
         print(f" (Showing {DISPLAY_WORD_CNT})") if len(word_set) > DISPLAY_WORD_CNT else print("")
 
