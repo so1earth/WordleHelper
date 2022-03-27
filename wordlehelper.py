@@ -78,7 +78,6 @@ def main():
             if pattern == '':
                 continue
             else:
-                count = 0
                 for i, letter in enumerate(pattern):
                     if letter.isalpha():
                         alpha_dic[letter] = i - 2
@@ -86,11 +85,14 @@ def main():
             enter_flag = False
             for letter, loc in alpha_dic.items():
                 if num == loc:
-                    print(letter, end=" ")
+                    print('\033[32m'+ letter +'\033[0m', end=" ")
                     enter_flag = True
             if enter_flag == False:
                 print("?", end=" ")
         print()
+        # 黄色ステータス表示
+        
+        # 他ステータス表示
         print("Match Number: ", len(word_set), end = "")
         print(f" (Showing {DISPLAY_WORD_CNT})") if len(word_set) > DISPLAY_WORD_CNT else print("")
 
