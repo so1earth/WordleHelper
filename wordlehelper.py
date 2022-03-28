@@ -91,6 +91,14 @@ def main():
                 print("?", end=" ")
         print()
         # 黄色ステータス表示
+        yellow_reg_list = yellow_reg.split('!')
+        alpha_dic = {}
+        for pattern in yellow_reg_list:
+            if pattern.startswith('.') or pattern[0].isalpha:
+                for i, letter in enumerate(pattern[0:6]):
+                    if letter.isalpha():
+                        alpha_dic[letter] = i + 1
+        print(alpha_dic)
         
         # 他ステータス表示
         print("Match Number: ", len(word_set), end = "")
