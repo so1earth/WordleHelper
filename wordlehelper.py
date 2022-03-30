@@ -81,6 +81,7 @@ def main():
                 for i, letter in enumerate(pattern):
                     if letter.isalpha():
                         alpha_dic[letter] = i - 2
+        print("   ", end="")
         for num in range(1, 6):
             enter_flag = False
             for letter, loc in alpha_dic.items():
@@ -98,7 +99,15 @@ def main():
                 for i, letter in enumerate(pattern[0:6]):
                     if letter.isalpha():
                         alpha_dic[letter] = i + 1
-        print(alpha_dic)
+        for letter, loc in alpha_dic.items():
+            print(letter + ": ", end="")
+            for num in range(1, 6):
+                if num == loc:
+                    print("✕ ", end="")
+                else:
+                    print("△ ", end="")
+            print()
+
         
         # 他ステータス表示
         print("Match Number: ", len(word_set), end = "")
