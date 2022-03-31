@@ -73,18 +73,18 @@ def main():
         # TODO 文字のステータス表示を表示
         # Green Status表示
         green_reg_list = green_reg.split(')')
-        alpha_dic = {}
+        green_alpha_dic = {}
         for pattern in green_reg_list:
             if pattern == '':
                 continue
             else:
                 for i, letter in enumerate(pattern):
                     if letter.isalpha():
-                        alpha_dic[letter] = i - 2
+                        green_alpha_dic[letter] = i - 2
         print("   ", end="")
         for num in range(1, 6):
             enter_flag = False
-            for letter, loc in alpha_dic.items():
+            for letter, loc in green_alpha_dic.items():
                 if num == loc:
                     print('\033[32m'+ letter +'\033[0m', end=" ")
                     enter_flag = True
@@ -93,16 +93,16 @@ def main():
         print()
         # 黄色ステータス表示
         yellow_reg_list = yellow_reg.split('!')
-        alpha_dic = {}
+        yello_alpha_dic = {}
         for pattern in yellow_reg_list:
             if pattern.startswith('.') or pattern[0].isalpha:
                 for i, letter in enumerate(pattern[0:6]):
                     if letter.isalpha():
-                        alpha_dic[letter] = i + 1
-        for letter, loc in alpha_dic.items():
+                        yello_alpha_dic[letter] = i + 1
+        for letter, loc in yello_alpha_dic.items():
             print(letter + ": ", end="")
             for num in range(1, 6):
-                if num == loc:
+                if (num == loc) or (num in green_alpha_dic.values()):
                     print("✕ ", end="")
                 else:
                     print("△ ", end="")
