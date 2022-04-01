@@ -91,11 +91,13 @@ def main():
             if enter_flag == False:
                 print("?", end=" ")
         print()
-        # 黄色ステータス表示
+        # Yello Status表示
         yellow_reg_list = yellow_reg.split('!')
         yello_alpha_dic = {}
         for pattern in yellow_reg_list:
-            if pattern.startswith('.') or pattern[0].isalpha:
+            if pattern == '':
+                continue
+            elif pattern.startswith('.') or pattern[0].isalpha:
                 for i, letter in enumerate(pattern[0:6]):
                     if letter.isalpha():
                         yello_alpha_dic[letter] = i + 1
@@ -107,6 +109,22 @@ def main():
                 else:
                     print("△ ", end="")
             print()
+        # Gray Status 表示
+        gray_reg_list = gray_reg.split('(')
+        gray_alpha_list = []
+        for pattern in gray_reg_list:
+            if pattern == '':
+                continue
+            else:
+                for letter in pattern:
+                    if letter.isalpha():
+                        gray_alpha_list.append(letter)
+        for i, letter in enumerate(gray_alpha_list):
+            print("✕ " + letter, end="")
+            if i == len(gray_alpha_list) - 1:
+                print()
+            else:
+                print(", ", end="")
 
         
         # 他ステータス表示
