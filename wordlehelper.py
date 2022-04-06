@@ -187,10 +187,15 @@ def main():
 
         # プロンプト
         print("\n")
-        ctrl_string = input("Another try to narrow down? (y or n) : ")
-        if ctrl_string != "y":
-            flag = False
-            break
+        while flag == True:
+            ctrl_string = input("Another try to narrow down? (y or n) : ")
+            if ctrl_string == "n":
+                flag = False
+                break
+            elif ctrl_string == 'y':
+                break
+            else:
+                pass
 
 
 
