@@ -36,7 +36,7 @@ def reg_generate(green_reg, yellow_reg, gray_reg, used_char):
                 yellow_reg += "(?!" + exclude_loc + ")"
     # Gray処理
     gray_string = input("Gray: ")
-    exclude_chars = gray_string.split(",")
+    exclude_chars = gray_string.replace(",","")
     for char in exclude_chars:
         if char not in used_char:
             gray_reg += "(?!.*" + char + ")"
