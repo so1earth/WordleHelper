@@ -7,6 +7,17 @@ def reg_generate(green_reg, yellow_reg, gray_reg, used_char):
     # 初期化
     green_string_for_reg = ""
 
+    # タイトル、凡例
+    print()
+    print("🟩🟨🟩🟨🟩🟨 Wordle Helper 🟩🟨🟩🟨🟩🟨")
+    print()
+    print("Input Example--------------------")
+    print("Green: a????")
+    print("Yellow: ????e")
+    print("Gray: c,v,d")
+    print("---------------------------------")
+    print()
+
     # Green処理
     green_string = input("Green: ")
     if len(green_string) == 5:
@@ -47,6 +58,7 @@ def reg_generate(green_reg, yellow_reg, gray_reg, used_char):
 def filter_via_regex(init_set, green_reg, yellow_reg, gray_reg):
     reg = "(?i)" + "^" + green_reg + \
                 yellow_reg + gray_reg + "[a-zA-Z]{5}$"
+    print()
     print("Regular Expression Pattern:", reg)
     word_set = set()
     for word in init_set:
