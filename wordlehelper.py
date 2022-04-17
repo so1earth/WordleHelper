@@ -2,7 +2,6 @@ import re
 import os
 DISPLAY_WORD_CNT = 200
 
-
 def reg_generate(green_reg, yellow_reg, gray_reg, used_char):
     # 初期化
     green_string_for_reg = ""
@@ -19,15 +18,22 @@ def reg_generate(green_reg, yellow_reg, gray_reg, used_char):
     print()
 
     # Green処理
-    green_string = input("Green: ")
-    if len(green_string) == 5:
-        for char in green_string:
-            if char == "?":
-                green_string_for_reg += "."
-            else:
-                green_string_for_reg += char
-                used_char += char
-        green_reg += "(?=" + green_string_for_reg + ")"
+    while True:
+        green_string = input("Green: ")
+        if len(green_string) == 5:
+            for char in green_string:
+                if char == "?":
+                    green_string_for_reg += "."
+                else:
+                    green_string_for_reg += char
+                    used_char += char
+            green_reg += "(?=" + green_string_for_reg + ")"
+            break
+        elif green_string == "":
+            break
+        else:
+            print("Please type in 5 letters.")
+            continue
 
     # Yellow処理
     yellow_string = input("Yellow: ")
@@ -53,7 +59,6 @@ def reg_generate(green_reg, yellow_reg, gray_reg, used_char):
             gray_reg += "(?!.*" + char + ")"
     # regular expression return
     return green_reg, yellow_reg, gray_reg, used_char
-
 
 def filter_via_regex(init_set, green_reg, yellow_reg, gray_reg):
     reg = "(?i)" + "^" + green_reg + \
