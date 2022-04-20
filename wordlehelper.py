@@ -16,11 +16,18 @@ def reg_generate(green_reg, yellow_reg, gray_reg, used_char):
     print("Gray: c,v,d")
     print("---------------------------------")
     print()
+    
+    # フォーマットチェック
+    def format_check(input_string):
+        for char in input_string:
+            if char != "?" and not char.isalpha():
+                return False
+        return True
 
     # Green処理
     while True:
         green_string = input("Green: ")
-        if len(green_string) == 5:
+        if len(green_string) == 5 and format_check(green_string):
             for char in green_string:
                 if char == "?":
                     green_string_for_reg += "."
@@ -32,25 +39,32 @@ def reg_generate(green_reg, yellow_reg, gray_reg, used_char):
         elif green_string == "":
             break
         else:
-            print("Please type in 5 letters.")
+            print("Please type in 5 letters including alphabet and ? or return to skip.")
             continue
 
     # Yellow処理
-    yellow_string = input("Yellow: ")
-    if len(yellow_string) == 5:
-        for index, char in enumerate(yellow_string, start=1):
-            if char != "?":
-                used_char += char
-                # 含まれている文字パターン
-                yellow_reg += "(?=.*" + char + ")"
-                # 除外位置パターン
-                exclude_loc = ""
-                for i in range(1, 6):
-                    if i == index:
-                        exclude_loc += char
-                    else:
-                        exclude_loc += "."
-                yellow_reg += "(?!" + exclude_loc + ")"
+    while True:
+        yellow_string = input("Yellow: ")
+        if len(yellow_string) == 5 and format_check(yellow_string):
+            for index, char in enumerate(yellow_string, start=1):
+                if char != "?":
+                    used_char += char
+                    # 含まれている文字パターン
+                    yellow_reg += "(?=.*" + char + ")"
+                    # 除外位置パターン
+                    exclude_loc = ""
+                    for i in range(1, 6):
+                        if i == index:
+                            exclude_loc += char
+                        else:
+                            exclude_loc += "."
+                    yellow_reg += "(?!" + exclude_loc + ")"
+                    break
+        elif yellow_string == "":
+            break
+        else:
+            print("Please type in 5 letters including alphabet and ? or return to skip.")
+            continue
     # Gray処理
     gray_string = input("Gray: ")
     exclude_chars = gray_string.replace(",","")
