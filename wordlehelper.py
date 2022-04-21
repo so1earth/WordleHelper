@@ -17,17 +17,23 @@ def reg_generate(green_reg, yellow_reg, gray_reg, used_char):
     print("---------------------------------")
     print()
     
-    # フォーマットチェック
-    def format_check(input_string):
+    # フォーマットチェック1
+    def format_check1(input_string):
         for char in input_string:
             if char != "?" and not char.isalpha():
                 return False
         return True
+    # フォーマットチェック2
+    def format_check2(input_string):
+        for char in input_string:
+            if char != "," and not char.isalpha():
+                return False
+        return True    
 
     # Green処理
     while True:
         green_string = input("Green: ")
-        if len(green_string) == 5 and format_check(green_string):
+        if len(green_string) == 5 and format_check1(green_string):
             for char in green_string:
                 if char == "?":
                     green_string_for_reg += "."
@@ -39,13 +45,13 @@ def reg_generate(green_reg, yellow_reg, gray_reg, used_char):
         elif green_string == "":
             break
         else:
-            print("Please type in 5 letters including alphabet and ? or return to skip.")
+            print("Please type in 5 letters word consits of only alphabet and ? or return to skip.")
             continue
 
     # Yellow処理
     while True:
         yellow_string = input("Yellow: ")
-        if len(yellow_string) == 5 and format_check(yellow_string):
+        if len(yellow_string) == 5 and format_check1(yellow_string):
             for index, char in enumerate(yellow_string, start=1):
                 if char != "?":
                     used_char += char
@@ -59,18 +65,28 @@ def reg_generate(green_reg, yellow_reg, gray_reg, used_char):
                         else:
                             exclude_loc += "."
                     yellow_reg += "(?!" + exclude_loc + ")"
-                    break
+            break
         elif yellow_string == "":
             break
         else:
-            print("Please type in 5 letters including alphabet and ? or return to skip.")
+            print("Please type in 5 letters word consits of only alphabet and ? or return to skip.")
             continue
     # Gray処理
-    gray_string = input("Gray: ")
-    exclude_chars = gray_string.replace(",","")
-    for char in exclude_chars:
-        if char not in used_char:
-            gray_reg += "(?!.*" + char + ")"
+    while True:
+        gray_string = input("Gray: ")
+        if format_check2(gray_string):
+            exclude_chars = gray_string.replace(",","")
+            for char in exclude_chars:
+                if char not in used_char:
+                    gray_reg += "(?!.*" + char + ")"
+            break
+        elif gray_string == "":
+            break
+        else:
+            print("Please type in 5 letters word consits of only alphabet and ? or return to skip.")
+            continue
+
+                
     # regular expression return
     return green_reg, yellow_reg, gray_reg, used_char
 
