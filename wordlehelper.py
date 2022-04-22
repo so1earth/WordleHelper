@@ -2,51 +2,98 @@ import re
 import os
 DISPLAY_WORD_CNT = 200
 
-
 def reg_generate(green_reg, yellow_reg, gray_reg, used_char):
     # 初期化
     green_string_for_reg = ""
 
+    # タイトル、凡例
+    print()
+    print("🟩🟨🟩🟨🟩🟨 Wordle Helper 🟩🟨🟩🟨🟩🟨")
+    print()
+    print("Input Example--------------------")
+    print("Green: a????")
+    print("Yellow: ????e")
+    print("Gray: c,v,d")
+    print("---------------------------------")
+    print()
+    
+    # フォーマットチェック1
+    def format_check1(input_string):
+        for char in input_string:
+            if char != "?" and not char.isalpha():
+                return False
+        return True
+    # フォーマットチェック2
+    def format_check2(input_string):
+        for char in input_string:
+            if char != "," and not char.isalpha():
+                return False
+        return True    
+
     # Green処理
-    green_string = input("Green: ")
-    if len(green_string) == 5:
-        for char in green_string:
-            if char == "?":
-                green_string_for_reg += "."
-            else:
-                green_string_for_reg += char
-                used_char += char
-        green_reg += "(?=" + green_string_for_reg + ")"
+    while True:
+        green_string = input("Green: ")
+        if len(green_string) == 5 and format_check1(green_string):
+            for char in green_string:
+                if char == "?":
+                    green_string_for_reg += "."
+                else:
+                    green_string_for_reg += char
+                    used_char += char
+            green_reg += "(?=" + green_string_for_reg + ")"
+            break
+        elif green_string == "":
+            break
+        else:
+            print("Please type in 5 letters word consits of only alphabet and ? or return to skip.")
+            continue
 
     # Yellow処理
-    yellow_string = input("Yellow: ")
-    if len(yellow_string) == 5:
-        for index, char in enumerate(yellow_string, start=1):
-            if char != "?":
-                used_char += char
-                # 含まれている文字パターン
-                yellow_reg += "(?=.*" + char + ")"
-                # 除外位置パターン
-                exclude_loc = ""
-                for i in range(1, 6):
-                    if i == index:
-                        exclude_loc += char
-                    else:
-                        exclude_loc += "."
-                yellow_reg += "(?!" + exclude_loc + ")"
+    while True:
+        yellow_string = input("Yellow: ")
+        if len(yellow_string) == 5 and format_check1(yellow_string):
+            for index, char in enumerate(yellow_string, start=1):
+                if char != "?":
+                    used_char += char
+                    # 含まれている文字パターン
+                    yellow_reg += "(?=.*" + char + ")"
+                    # 除外位置パターン
+                    exclude_loc = ""
+                    for i in range(1, 6):
+                        if i == index:
+                            exclude_loc += char
+                        else:
+                            exclude_loc += "."
+                    yellow_reg += "(?!" + exclude_loc + ")"
+            break
+        elif yellow_string == "":
+            break
+        else:
+            print("Please type in 5 letters word consits of only alphabet and ? or return to skip.")
+            continue
     # Gray処理
-    gray_string = input("Gray: ")
-    exclude_chars = gray_string.split(",")
-    for char in exclude_chars:
-        if char not in used_char:
-            gray_reg += "(?!.*" + char + ")"
+    while True:
+        gray_string = input("Gray: ")
+        if format_check2(gray_string):
+            exclude_chars = gray_string.replace(",","")
+            for char in exclude_chars:
+                if char not in used_char:
+                    gray_reg += "(?!.*" + char + ")"
+            break
+        elif gray_string == "":
+            break
+        else:
+            print("Please type in 5 letters word consits of only alphabet and ? or return to skip.")
+            continue
+
+                
     # regular expression return
     return green_reg, yellow_reg, gray_reg, used_char
-
 
 def filter_via_regex(init_set, green_reg, yellow_reg, gray_reg):
     reg = "(?i)" + "^" + green_reg + \
                 yellow_reg + gray_reg + "[a-zA-Z]{5}$"
+    print()
     print("Regular Expression Pattern:", reg)
     word_set = set()
     for word in init_set:
@@ -187,10 +234,15 @@ def main():
 
         # プロンプト
         print("\n")
-        ctrl_string = input("Another try to narrow down? (y or n) : ")
-        if ctrl_string != "y":
-            flag = False
-            break
+        while flag == True:
+            ctrl_string = input("Another try to narrow down? (y or n) : ")
+            if ctrl_string == "n":
+                flag = False
+                break
+            elif ctrl_string == 'y':
+                break
+            else:
+                pass
 
 
 
