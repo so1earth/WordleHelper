@@ -17,6 +17,7 @@ cd WordleHelper
 python3 wordlehelper.py
 
 ```
+Note: gif demo above is using alias for easy access.
 
 # License
 
