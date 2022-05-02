@@ -3,7 +3,7 @@
 
 Command line tool to help solving the wordle by narrowing down the filtered words. 
 
-<!--- ![WordleHelper_demo.gif](Wordle%20Helper%20README%20md%207b42719b20ce439c91faba21a96403ab/WordleHelper_demo.gif)--->
+![WordleHelper_demo.gif](WordleHelper_demo.gif)
 
 # Requirement
 
